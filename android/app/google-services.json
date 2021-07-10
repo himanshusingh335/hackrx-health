@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1073501027422",
+    "project_id": "bajaj-finserv-79314",
+    "storage_bucket": "bajaj-finserv-79314.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073501027422:android:89501627b8426beb4788cf",
+        "android_client_info": {
+          "package_name": "com.example.finserv_health"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073501027422-jo8g62etqum8ktl1mlqu0p1hde5qtpg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe20mdvmWIJflecgGUkIQUdWMP5fouQWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073501027422-jo8g62etqum8ktl1mlqu0p1hde5qtpg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
