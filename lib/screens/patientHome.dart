@@ -1,3 +1,5 @@
+import 'package:finserv_health/provider/colors.dart';
+import 'package:finserv_health/provider/payment.dart';
 import 'package:flutter/material.dart';
 
 import 'package:finserv_health/screens/settings.dart';
@@ -5,6 +7,7 @@ import 'package:finserv_health/services/oAuth.dart';
 import 'package:finserv_health/screens/doctorList.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class PatientHomeScreen extends StatelessWidget {
   const PatientHomeScreen({Key? key}) : super(key: key);
@@ -16,10 +19,10 @@ class PatientHomeScreen extends StatelessWidget {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
           centerTitle: true,
           title: Text(
             'Bajaj Finserv Health',
-            style: TextStyle(),
           ),
         ),
         drawer: Drawer(
@@ -53,193 +56,288 @@ class PatientHomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Flexible(
-              flex: 15,
-              fit: FlexFit.tight,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  controller: PageController(viewportFraction: 0.84),
-                  children: <Widget>[
-                    SizedBox(
-                      width: 220,
-                      child: Card(
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.6)),
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                Colors.purple.shade900,
+                Colors.purple.shade800,
+                Colors.purple.shade700,
+                Colors.purple.shade400,
+                Colors.purple.shade300,
+                Colors.purple.shade200
+              ])),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Flexible(
+                flex: 16,
+                fit: FlexFit.tight,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    controller: PageController(viewportFraction: 0.84),
+                    children: <Widget>[
+                      SizedBox(
+                        width: 300,
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: Image.asset(
+                                  'assets/idea.png',
+                                  height: 35,
+                                ),
+                                title: const Text(
+                                  'Did You Know ?',
+                                  style: TextStyle(
+                                      color: Colors.blue, fontSize: 25),
+                                ),
                               ),
-                            ),
-                            ButtonBar(
-                              alignment: MainAxisAlignment.start,
-                              children: [
-                                FlatButton(
-                                  textColor: const Color(0xFF6200EE),
-                                  onPressed: () {
-                                    // Perform some action
-                                  },
-                                  child: const Text('ACTION 1'),
-                                ),
-                                FlatButton(
-                                  textColor: const Color(0xFF6200EE),
-                                  onPressed: () {
-                                    // Perform some action
-                                  },
-                                  child: const Text('ACTION 2'),
-                                ),
-                              ],
-                            ),
-                          ],
+                              Image.asset(
+                                'assets/expectancy.png',
+                                height: 100,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 15, 20, 0),
+                                child: Text(
+                                    'Between 2000 and 2015, the average global life expectancy increased by five years.',
+                                    style: TextStyle(color: Colors.black)),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 220,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Card(
-                            clipBehavior: Clip.antiAlias,
-                            child: Stack(
-                              alignment: AlignmentDirectional.bottomStart,
-                              children: [
-                                Image.asset(
-                                  'assets/add1.jpg',
-                                  width: constraints.maxWidth,
-                                  height: constraints.maxHeight,
+                      SizedBox(
+                        width: 300,
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: Image.asset(
+                                  'assets/cash.png',
+                                  height: 35,
                                 ),
-                                ButtonBar(
-                                  alignment: MainAxisAlignment.start,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.share),
-                                      onPressed: () {},
-                                    )
-                                  ],
+                                title: const Text(
+                                  'Your Health Wallet',
+                                  style: TextStyle(
+                                      color: Colors.blue, fontSize: 23),
                                 ),
-                              ],
-                            ),
-                          );
-                        },
+                              ),
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                                  child: Center(
+                                    child: Consumer<Payment>(
+                                      builder: (context, p, child) {
+                                        return Text(
+                                          'Rs ' + '${p.amount.toString()}',
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 50,
+                                              fontWeight: FontWeight.bold),
+                                        );
+                                      },
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 220,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Card(
-                            clipBehavior: Clip.antiAlias,
-                            child: Stack(
-                              alignment: AlignmentDirectional.bottomEnd,
-                              children: [
-                                Image.asset(
-                                  'assets/add2.jpg',
-                                  width: constraints.maxWidth,
-                                  height: constraints.maxHeight,
+                    ],
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 3,
+                fit: FlexFit.loose,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Text(
+                    'Find Your Specialist\n ',
+                    style:
+                        TextStyle(fontSize: 22, color: Colors.purple.shade100),
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 25,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorListScreen(
+                                        title: 'Available Cardiologists',
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.purple.shade100,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                child: Image.asset(
+                                  'assets/cardio.png',
+                                  height: 50,
                                 ),
-                                ButtonBar(
-                                  alignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.share),
-                                      onPressed: () {},
-                                    )
-                                  ],
-                                ),
-                              ],
+                              ),
+                              radius: 40,
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorListScreen(
+                                      title: 'Available Dentists')),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.purple.shade100,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 8),
+                                child: Image.asset(
+                                  'assets/dentist.png',
+                                  height: 55,
+                                ),
+                              ),
+                              radius: 40,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorListScreen(
+                                      title: 'Available ENT specialists')),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.purple.shade100,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 8),
+                                child: Image.asset(
+                                  'assets/ent.png',
+                                  height: 50,
+                                ),
+                              ),
+                              radius: 40,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorListScreen(
+                                        title: 'Available Orthopaedic Surgeons',
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.purple.shade100,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 5, 8),
+                                child: Image.asset(
+                                  'assets/ortho.png',
+                                  height: 50,
+                                ),
+                              ),
+                              radius: 40,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorListScreen(
+                                      title: 'Available  Pediatricians')),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.purple.shade100,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 8),
+                                child: Image.asset(
+                                  'assets/pedia.png',
+                                  height: 50,
+                                ),
+                              ),
+                              radius: 40,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorListScreen(
+                                      title: 'Available Psychiatrists')),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.purple.shade100,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                child: Image.asset(
+                                  'assets/mental.png',
+                                  height: 50,
+                                ),
+                              ),
+                              radius: 40,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ),
-            Flexible(
-              flex: 3,
-              fit: FlexFit.loose,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Text(
-                  'Find Your Specialist\n ',
-                  style: TextStyle(fontSize: 22, color: Colors.blue),
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 25,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DoctorListScreen(
-                                  title: 'Available Cardiologists',
-                                )),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(12.0),
-                      padding: EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        child: Text('A'),
-                        radius: 40,
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                DoctorListScreen(title: 'Available Dentists')),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(12.0),
-                      padding: EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        child: Text('A'),
-                        radius: 40,
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DoctorListScreen(
-                                title: 'Available ENT specialists')),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(12.0),
-                      padding: EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        child: Text('A'),
-                        radius: 40,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:finserv_health/provider/colors.dart';
+import 'package:finserv_health/provider/payment.dart';
 import 'package:finserv_health/screens/doctorHome.dart';
 import 'package:flutter/material.dart';
 
@@ -20,11 +21,28 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppColors(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AppColors>(create: (context) => AppColors()),
+        ChangeNotifierProvider<Payment>(create: (context) => Payment()),
+      ],
       child: MaterialApp(
         title: 'Bajaj Finserv Health',
-        theme: ThemeData.light(),
+        theme: ThemeData.from(
+            colorScheme: ColorScheme(
+                primary: Colors.purple.shade900,
+                primaryVariant: Colors.black87,
+                secondary: Colors.purple,
+                secondaryVariant: Colors.white,
+                surface: Colors.white,
+                background: Colors.white,
+                error: Colors.red,
+                onPrimary: Colors.purple,
+                onSecondary: Colors.white,
+                onSurface: Colors.purple,
+                onBackground: Colors.purple,
+                onError: Colors.red,
+                brightness: Brightness.light)),
         darkTheme: ThemeData.dark(),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
