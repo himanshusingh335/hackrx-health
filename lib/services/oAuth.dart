@@ -1,20 +1,22 @@
-import 'package:finserv_health/screens/doctorHome.dart';
-import 'package:finserv_health/screens/patientHome.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future<void> logInToTether(
+Future<void> logIn(
   TextEditingController email,
   TextEditingController password,
   BuildContext context,
 ) async {
   await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email.text.trim(), password: password.text);
+  FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .update({'status': 'online'});
 }
 
-Future<void> signUpToTether(
+Future<void> signUp(
   TextEditingController email,
   TextEditingController password,
   TextEditingController name,
@@ -23,6 +25,7 @@ Future<void> signUpToTether(
 ) async {
   await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email.text.trim(), password: password.text);
+
   sendEmailVerification();
 
   await FirebaseFirestore.instance
@@ -33,7 +36,7 @@ Future<void> signUpToTether(
     "name": name.text.trim(),
     "email": email.text.trim(),
     "role": role,
-    "status": 'online'
+    "status": 'offline'
   });
 }
 

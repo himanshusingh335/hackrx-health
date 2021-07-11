@@ -1,6 +1,4 @@
 import 'package:finserv_health/provider/colors.dart';
-import 'package:finserv_health/screens/doctorHome.dart';
-import 'package:finserv_health/screens/patientHome.dart';
 import 'package:finserv_health/screens/signupScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +6,6 @@ import 'package:finserv_health/services/oAuth.dart';
 import 'package:finserv_health/components/customTextField.dart';
 
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -41,9 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                  padding: EdgeInsets.fromLTRB(0, 50, 10, 50),
                   child: Center(
-                    child: Image.asset('assets/logo.jpg', height: 200),
+                    child: Image.asset(
+                      'assets/logo.png',
+                      height: 70,
+                    ),
                   ),
                 ),
                 Padding(
@@ -138,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     setState(() {
                                       _isLoading = true;
                                     });
-                                    await logInToTether(
+                                    await logIn(
                                       _emailController,
                                       _passwordController,
                                       context,

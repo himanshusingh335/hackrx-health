@@ -74,10 +74,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 color: Provider.of<AppColors>(context, listen: false).myBlue,
               ),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white)),
+                  borderSide: BorderSide(color: Theme.of(context).cardColor)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide(color: Colors.white))),
+                  borderSide: BorderSide(color: Theme.of(context).cardColor))),
           // The validator receives the text that the user has entered.
           validator: (value) {
             if (!widget.isPassword) {

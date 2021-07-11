@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import 'package:finserv_health/components/customDropDown.dart';
 import 'package:finserv_health/components/customTextField.dart';
 import 'package:finserv_health/provider/colors.dart';
 import 'package:finserv_health/services/oAuth.dart';
@@ -15,7 +14,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  late final _listOfRoles;
+  late final List<String> _listOfRoles;
   late String _roleDropDownValue;
   late final _formKey;
   late final TextEditingController _emailController;
@@ -45,11 +44,11 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 50, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 50, 10, 50),
                   child: Center(
                     child: Image.asset(
-                      'assets/logo.jpg',
-                      height: 90,
+                      'assets/logo.png',
+                      height: 70,
                     ),
                   ),
                 ),
@@ -73,12 +72,49 @@ class _SignupScreenState extends State<SignupScreen> {
                       validatorIsEmpty: 'Enter Email Address',
                     )),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: CustomDropdownMenu(
-                    dropDownValue: _roleDropDownValue,
-                    list: _listOfRoles,
-                    labelText: 'SELECT YOUR ROLE',
-                    icon: Icons.leaderboard_outlined,
+                  padding: EdgeInsets.fromLTRB(25, 20, 25, 0),
+                  child: Card(
+                    elevation: 0,
+                    child: DropdownButtonFormField(
+                      value: _roleDropDownValue,
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        color: Provider.of<AppColors>(context, listen: false)
+                            .myRed,
+                      ),
+                      elevation: 5,
+                      style: TextStyle(
+                        color: Provider.of<AppColors>(context, listen: false)
+                            .myBlue,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'ROLE',
+                        labelStyle: TextStyle(
+                            color:
+                                Provider.of<AppColors>(context, listen: false)
+                                    .myBlue,
+                            fontWeight: FontWeight.bold),
+                        prefixIcon: Icon(Icons.person,
+                            color:
+                                Provider.of<AppColors>(context, listen: false)
+                                    .myRed),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).cardColor),
+                        ),
+                      ),
+                      items: _listOfRoles.map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _roleDropDownValue = newValue!;
+                        });
+                      },
+                    ),
                   ),
                 ),
                 Padding(
@@ -93,7 +129,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 15, 20, 0),
+                  padding: EdgeInsets.fromLTRB(25, 15, 25, 0),
                   child: _isLoading == true
                       ? CircularProgressIndicator()
                       : Row(
@@ -120,7 +156,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       setState(() {
                                         _isLoading = true;
                                       });
-                                      signUpToTether(
+                                      signUp(
                                               _emailController,
                                               _passwordController,
                                               _nameController,
