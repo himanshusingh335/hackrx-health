@@ -90,38 +90,39 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen>
               return Text('Something went wrong');
             }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading");
-            }
-            return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var doc = snapshot.data!.docs[index];
-                  return Card(
-                    child: InkWell(
-                      onTap: () async {
-                        await canLaunch('https://meet.google.com/qko-ydce-mep')
-                            ? await launch(
-                                'https://meet.google.com/qko-ydce-mep')
-                            : throw 'Could not launch url';
-                        FirebaseFirestore.instance
-                            .collection('chats')
-                            .doc(doc.id)
-                            .delete();
-                      },
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.brown.shade800,
-                          child: const Text('P'),
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var doc = snapshot.data!.docs[index];
+                    return Card(
+                      child: InkWell(
+                        onTap: () async {
+                          await canLaunch(
+                                  'https://meet.google.com/qko-ydce-mep')
+                              ? await launch(
+                                  'https://meet.google.com/qko-ydce-mep')
+                              : throw 'Could not launch url';
+                          FirebaseFirestore.instance
+                              .collection('chats')
+                              .doc(doc.id)
+                              .delete();
+                        },
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.brown.shade800,
+                            child: const Text('P'),
+                          ),
+                          title: Text('${doc['senderName']}'),
+                          subtitle: Text('You have a new Request !!'),
+                          trailing: Icon(Icons.more_vert),
+                          isThreeLine: true,
                         ),
-                        title: Text('${doc['senderName']}'),
-                        subtitle: Text('You have a new Request !!'),
-                        trailing: Icon(Icons.more_vert),
-                        isThreeLine: true,
                       ),
-                    ),
-                  );
-                });
+                    );
+                  });
+            }
+            return Center(child: CircularProgressIndicator());
           },
         ),
       ),
