@@ -7,7 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DoctorListScreen extends StatelessWidget {
-  const DoctorListScreen({Key? key}) : super(key: key);
+  const DoctorListScreen({Key? key, required this.title}) : super(key: key);
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,7 @@ class DoctorListScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Available Doctors',
-          style: TextStyle(),
+          this.title,
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(

@@ -71,10 +71,6 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen>
                 title: Text('Sign out'),
                 onTap: () async {
                   signOut(context);
-                  /*Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                      (Route<dynamic> route) => false);*/
                 },
               ),
             ],
@@ -104,9 +100,14 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen>
                   return Card(
                     child: InkWell(
                       onTap: () async {
-                        await canLaunch(doc['meet'])
-                            ? await launch(doc['meet'])
+                        await canLaunch('https://meet.google.com/qko-ydce-mep')
+                            ? await launch(
+                                'https://meet.google.com/qko-ydce-mep')
                             : throw 'Could not launch url';
+                        FirebaseFirestore.instance
+                            .collection('chats')
+                            .doc(doc.id)
+                            .delete();
                       },
                       child: ListTile(
                         leading: CircleAvatar(

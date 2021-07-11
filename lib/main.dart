@@ -2,7 +2,6 @@ import 'package:finserv_health/provider/colors.dart';
 import 'package:finserv_health/screens/doctorHome.dart';
 import 'package:flutter/material.dart';
 
-import 'package:finserv_health/services/oAuth.dart';
 import 'package:finserv_health/screens/loginScreen.dart';
 import 'package:finserv_health/screens/patientHome.dart';
 
@@ -47,7 +46,13 @@ class MyApp extends StatelessWidget {
                       } else
                         return PatientHomeScreen();
                     }
-                    return CircularProgressIndicator();
+                    return Scaffold(
+                      body: Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
                   });
             } else {
               return Scaffold(
